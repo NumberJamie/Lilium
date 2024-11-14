@@ -15,6 +15,9 @@ class TestImageHasher(unittest.TestCase):
                 return
             self.assertTrue(math.isclose(expected[index], value), f'Expected: {expected[index]}, Got: {value}.')
 
+    def test_get_mean(self):
+        self.assertEqual(self.image_hasher.get_mean(self.test_data), 244)
+
     def test_transpose(self):
         input_data = [[0, 1, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
         expected = [[0, 5, 9, 13], [1, 6, 10, 14], [3, 7, 11, 15], [4, 8, 12, 16]]
