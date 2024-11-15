@@ -14,7 +14,7 @@ class ImageHasher:
     def transpose(image_data: ImageData) -> ImageData:
         return [list(pixels) for pixels in zip(*image_data)]
 
-    def get_mean(self, image_data: ImageData) -> int:
+    def mean(self, image_data: ImageData) -> int:
         total = 0
         for pixels in image_data:
             total += sum(pixels)
@@ -23,8 +23,8 @@ class ImageHasher:
     def hash(self, path: str) -> hex:
         hash_value = 0
         image_data = self.apply_dct(self.get_data(path))
-        low_frequency = self.get_low_frequency(image_data)
-        mean = self.get_mean(low_frequency)
+        low_frequency = self.low_frequency(image_data)
+        mean = self.mean(low_frequency)
         for column in low_frequency:
             for pixel in column:
                 hash_value = (hash_value << 1) | (0 if pixel < mean else 1)
@@ -34,7 +34,7 @@ class ImageHasher:
         image = Image.thumbnail(path, self.size, height=self.size, size='force').colourspace(self.colorspace)
         return image.flatten().tolist()
 
-    def get_low_frequency(self, image_data: ImageData) -> ImageData:
+    def low_frequency(self, image_data: ImageData) -> ImageData:
         dct_slice = int(self.size / 4)
         return [image_data[index][:dct_slice] for index in range(dct_slice)]
 
