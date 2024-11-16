@@ -1,4 +1,5 @@
 import math
+import os.path
 
 from pyvips import Image
 
@@ -31,6 +32,8 @@ class ImageHasher:
         return hex(hash_value)[2:]
 
     def get_data(self, path: str) -> ImageData:
+        if not os.path.exists(path):
+            raise FileNotFoundError(f'{path} does not exists.')
         image = Image.thumbnail(path, self.size, height=self.size, size='force').colourspace(self.colorspace)
         return image.flatten().tolist()
 
