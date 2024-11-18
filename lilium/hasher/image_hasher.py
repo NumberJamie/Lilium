@@ -55,5 +55,5 @@ class ImageHasher:
             for pixel in range(self.size):
                 total += pixels[pixel] * math.cos((2 * pixel + 1) * index * factor)
             scale = math.sqrt(1 / self.size) if index == 0 else math.sqrt(2 / self.size)
-            pixels_dct.append(total * scale)
+            pixels_dct.append(round(total * scale, 3))
         return pixels_dct
